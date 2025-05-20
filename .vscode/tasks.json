@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Build Docker Image",
+			"command": "docker build -t flask-docker-app .",
+			"group": "build",
+			"problemMatcher": []
+		}
+	]
+}
