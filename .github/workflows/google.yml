@@ -42,7 +42,7 @@ env:
   PROJECT_ID: 'supple-cubist-457711-v2' #  your Google Cloud project ID
   GAR_LOCATION: 'europe-central2' #  your region
   GKE_CLUSTER: 'autopilot-cluster-1' #  your cluster name
-  GKE_ZONE: 'europe-central2-b' #  cluster zone
+  GKE_REGION: 'europe-central2' #  cluster region
   DEPLOYMENT_NAME: 'gke-test' # TODO: update to your deployment name
   REPOSITORY: 'test-repo' # your Artifact Registry docker repository name
   IMAGE: 'static-site'
@@ -80,12 +80,14 @@ jobs:
           password: '${{ steps.auth.outputs.auth_token }}'
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
+    
       # Get the GKE credentials so we can deploy to the cluster
       - name: 'Set up GKE credentials'
         uses: 'google-github-actions/get-gke-credentials@6051de21ad50fbb1767bc93c11357a49082ad116' # google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: '${{ env.GKE_CLUSTER }}'
-          location: '${{ env.GKE_ZONE }}'
+          location: '${{ env.GKE_REGION }}'
+          project_id: '${{ env.PROJECT_ID }}' # Add this line
 
       # Build the Docker image
       - name: 'Build and push Docker container'
