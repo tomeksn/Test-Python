@@ -42,7 +42,7 @@ env:
   PROJECT_ID: 'supple-cubist-457711-v2' #  your Google Cloud project ID
   GAR_LOCATION: 'europe-central2' #  your region
   GKE_CLUSTER: 'autopilot-cluster-1' #  your cluster name
-  GKE_ZONE: 'europe-central2-b' #  cluster zone
+  GKE_ZONE: 'europe-central2-c' #  cluster zone
   DEPLOYMENT_NAME: 'gke-test' # TODO: update to your deployment name
   REPOSITORY: 'test-repo' # your Artifact Registry docker repository name
   IMAGE: 'static-site'
