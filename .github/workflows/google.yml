@@ -43,7 +43,7 @@ env:
   GAR_LOCATION: 'europe-central2' #  your region
   GKE_CLUSTER: 'autopilot-cluster-1' #  your cluster name
   GKE_REGION: 'europe-central2' #  cluster region
-  DEPLOYMENT_NAME: 'gke-test' # TODO: update to your deployment name
+  DEPLOYMENT_NAME: 'flask-app' #  your deployment name, as in deployment.yml
   REPOSITORY: 'test-repo' # your Artifact Registry docker repository name
   IMAGE: 'static-site'
   WORKLOAD_IDENTITY_PROVIDER: 'projects/276166410214/locations/global/workloadIdentityPools/github1/providers/github-provider' # your workload identity provider
