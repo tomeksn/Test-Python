@@ -106,6 +106,7 @@ jobs:
       # Set up kustomize
       - name: 'Set up Kustomize'
         run: |-
+          cd ./flask-gke-app/k8s
           ARCH=$(uname -m)
           if [[ "$ARCH" == "x86_64" ]]; then
             ARCH="amd64"
@@ -122,7 +123,6 @@ jobs:
       - name: 'Deploy to GKE'
         run: |-
           # replacing the image name in the k8s template
-          cd ./flask-gke-app/k8s
           ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA
           ./kustomize build . | kubectl apply -f -
           kubectl rollout status deployment/$DEPLOYMENT_NAME
