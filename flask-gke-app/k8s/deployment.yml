@@ -16,16 +16,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: your-docker-image:latest
+        image: localhost:5000/flask-gke-app:latest
         ports:
         - containerPort: 5000
-        env:
-        - name: FLASK_ENV
-          value: production
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "250m"
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
