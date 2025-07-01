@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: ghcr.io/tomeksn/flask-gke-app:latest
+        image: ghcr.io/tomeksn/flask-gke-app:65059df
         ports:
         - containerPort: 5000
