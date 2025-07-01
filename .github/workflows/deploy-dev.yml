@@ -1,0 +1,40 @@
+name: Build & Deploy to GHCR
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Log in to GHCR
+      run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Extract short SHA
+      id: vars
+      run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
+    - name: Build Docker image
+      run: |
+        docker build -t ghcr.io/${{ github.repository_owner }}/flask-gke-app:${{ env.SHORT_SHA }} flask-gke-app
+
+    - name: Push to GHCR
+      run: |
+        docker push ghcr.io/${{ github.repository_owner }}/flask-gke-app:${{ env.SHORT_SHA }}
+
+    - name: Update deployment.yaml with new image tag
+      run: |
+        sed -i "s|image: .*|image: ghcr.io/${{ github.repository_owner }}/flask-gke-app:${{ env.SHORT_SHA }}|" flask-gke-app/k8s/deployment.yaml
+
+    - name: Commit updated deployment
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git commit -am "Update image to ${{ env.SHORT_SHA }}"
+        git push
