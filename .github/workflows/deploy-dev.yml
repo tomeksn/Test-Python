@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - dev
+  
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -12,6 +15,9 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
     - name: Log in to GHCR
       run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
